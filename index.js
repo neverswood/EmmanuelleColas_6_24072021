@@ -1,5 +1,5 @@
-// Index Page
-//faire le passer au contenu. invisible ,qui apparait au scroll et qui remonte en haut de la page quand on click dessus.
+
+
 
 
 
@@ -85,10 +85,10 @@ async function photographerPageIndex() {
 
 
     })
+
+
+
+    console.log(tags)
 }
 
 photographerPageIndex();
-
-// Photographers Pages
-
-
