@@ -1,7 +1,4 @@
-
-
-
-
+////////
 
 async function photographerPageIndex() {
     //const res = await fetch("https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Front-End+V2/P5+Javascript+%26+Accessibility/FishEyeData.json");
@@ -14,7 +11,6 @@ async function photographerPageIndex() {
 
        photographer.tags.forEach(tag => {
             tags.add(tag);
-
         });
 
         const photographersContainer = document.getElementById("photographers");
@@ -63,7 +59,10 @@ async function photographerPageIndex() {
         photographerSection.appendChild(photographerDivPresentation);
         photographersContainer.appendChild(photographerSection);
 
+
+
     });
+    
     
     tags.forEach( tag => {
 
@@ -84,11 +83,8 @@ async function photographerPageIndex() {
         console.log(navBarSpan)
 
 
-    })
-
-
-
-    console.log(tags)
+    });
 }
 
 photographerPageIndex();
+
