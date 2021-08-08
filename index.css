@@ -65,12 +65,12 @@ main {
   justify-content: center;
 }
 
-h1 {
+.title {
   position: absolute;
   right: 100px;
   top: 48px;
-  font-size: 36px;
   margin: 0;
+  font-size: 36px;
   color: #901c1c;
 }
 
@@ -86,7 +86,7 @@ h1 {
   margin: 148px 90px 10px 90px;
 }
 
-.photographer img {
+img {
   object-fit: cover;
   width: 200px;
   height: 200px;
@@ -119,6 +119,13 @@ h1 {
   padding: 0 0 120px 0;
 }
 
+/* photographer page */
+
+.name {
+  font-size: 64px;
+  color: #901c1c;
+}
+
 @media screen and (max-width: 764px) {
   .logo {
     position: absolute;
@@ -142,7 +149,7 @@ h1 {
     flex-direction: column;
   }
 
-  h1 {
+  .title {
     font-size: 14px;
     top: 35px;
     right: 30px;

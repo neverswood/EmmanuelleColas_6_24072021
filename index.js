@@ -9,6 +9,8 @@ async function photographerPageIndex() {
     let tags = new Set();
     data.photographers.forEach( photographer => {
 
+    
+
        photographer.tags.forEach(tag => {
             tags.add(tag);
         });

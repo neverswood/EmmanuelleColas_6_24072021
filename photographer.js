@@ -4,12 +4,29 @@ async function photographerPage() {
     const res = await fetch("/api/FishEyeData.json");
     const data = await res.json();
     console.log(data);
+
+        const photog = new URLSearchParams(window.location.search);
+        const queryPhotographerId = parseInt(photog.getAll("id")[0]);
+
+
     data.photographers.forEach( photo => {
+
+        
+
+///
+
+        
+      
+
+
+        //////
+        if(photo.id == queryPhotographerId) {
 
         const photographerPageSection = document.getElementById("presentation-photographer");
         const photographerPageDiv = document.createElement("div");
 
         const photographerPageH1 = document.createElement("h1");
+        photographerPageH1.setAttribute = ("class", "name");
         photographerPageH1.innerHTML = photo.name;
 
         const photographerPageH2 = document.createElement("h2");
@@ -25,7 +42,7 @@ async function photographerPage() {
         photographerPageButton.innerHTML = "Contactez-moi";
 
         const photographerPageImage = document.createElement("img");
-        photographerPageImage.setAttribute("src", `/Sample_Photos/Photographers_ID_Photos/${photographer.portrait}`);
+        photographerPageImage.setAttribute("src", `/Sample_Photos/Photographers_ID_Photos/${photo.portrait}`);
         photographerPageImage.setAttribute("alt", "");
 
 
@@ -39,6 +56,7 @@ async function photographerPage() {
         photographerPageSection.appendChild(photographerPageImage);
 
 
-
+        }
     });
-};
+}
+photographerPage();
