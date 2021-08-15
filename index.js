@@ -45,22 +45,37 @@ async function photographerPageIndex() {
         const photographerDivTag = document.createElement("div");
         photographerDivTag.setAttribute("class", "photographer_tag");
 
-        const photographerTag = document.createElement("a");
-        photographerTag.setAttribute("href", "#");
-        photographerTag.setAttribute("id", photographer.tags);
 
+        
 
-        photographerDivTag.appendChild(photographerTag);
-        photographerSection.appendChild(photographerDivTag);
         photographerDivPresentation.appendChild(photographerH3);
         photographerDivPresentation.appendChild(photographerP);
         photographerDivPresentation.appendChild(photographerSpan);
+        photographerDivPresentation.appendChild(photographerDivTag);
         photographerLink.appendChild(photographerImage);
         photographerLink.appendChild(photographerH2);
         photographerSection.appendChild(photographerLink);
         photographerSection.appendChild(photographerDivPresentation);
         photographersContainer.appendChild(photographerSection);
 
+
+
+        ////////
+
+        
+    tags.forEach( tag => {
+
+  
+        const photographerTag = document.createElement("a");
+        photographerTag.setAttribute("href", "#");
+
+        const photographerSpanTag = document.createElement("span");
+        photographerSpanTag.append("#"+ tag);
+
+        photographerTag.appendChild(photographerSpanTag);
+        photographerDivTag.appendChild(photographerTag);        
+
+    });
 
 
     });
@@ -79,13 +94,11 @@ async function photographerPageIndex() {
         navBarA.appendChild(navBarSpan);
         navBarDiv.appendChild(navBarA);
         navBarContainer.appendChild(navBarDiv);
-        console.log(navBarA)
-
-
-        console.log(navBarSpan)
 
 
     });
+
+
 }
 
 photographerPageIndex();

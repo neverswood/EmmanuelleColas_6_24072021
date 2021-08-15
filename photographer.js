@@ -7,6 +7,8 @@ async function photographerPage() {
 
         const photog = new URLSearchParams(window.location.search);
         const queryPhotographerId = parseInt(photog.getAll("id")[0]);
+        let tags = new Set();
+
 
 
     data.photographers.forEach( photo => {
@@ -14,6 +16,10 @@ async function photographerPage() {
         
 
 ///
+photo.tags.forEach(tag => {
+    tags.add(tag);
+});
+
 
         
       
@@ -26,7 +32,7 @@ async function photographerPage() {
         const photographerPageDiv = document.createElement("div");
 
         const photographerPageH1 = document.createElement("h1");
-        photographerPageH1.setAttribute = ("class", "name");
+        photographerPageH1.setAttribute("class", "photographer-name");
         photographerPageH1.innerHTML = photo.name;
 
         const photographerPageH2 = document.createElement("h2");
@@ -38,12 +44,17 @@ async function photographerPage() {
         const photographerPageSpan = document.createElement("span");
         photographerPageSpan.innerHTML = photo.price + "€/jour";
 
+        const photographerPageDivTag = document.createElement("div");
+        photographerPageDivTag.setAttribute("class", "photographerPage-tag");
+
         const photographerPageButton = document.createElement("button");
+        photographerPageButton.setAttribute("class", "button");
         photographerPageButton.innerHTML = "Contactez-moi";
 
         const photographerPageImage = document.createElement("img");
         photographerPageImage.setAttribute("src", `/Sample_Photos/Photographers_ID_Photos/${photo.portrait}`);
         photographerPageImage.setAttribute("alt", "");
+        photographerPageImage.setAttribute("class", "image-photographer");
 
 
 
@@ -51,9 +62,26 @@ async function photographerPage() {
         photographerPageDiv.appendChild(photographerPageH2);
         photographerPageDiv.appendChild(photographerPageP);
         photographerPageDiv.appendChild(photographerPageSpan);
+        photographerPageDiv.appendChild(photographerPageDivTag);
         photographerPageSection.appendChild(photographerPageDiv);
         photographerPageSection.appendChild(photographerPageButton);
         photographerPageSection.appendChild(photographerPageImage);
+
+        ///
+
+        tags.forEach( tag => {
+
+  
+            const photographerPageTag = document.createElement("a");
+            photographerPageTag.setAttribute("href", "#");
+    
+            let photographerPageSpanTag = document.createElement("span");
+            photographerPageSpanTag.append("#", tag);
+    
+            photographerPageTag.appendChild(photographerPageSpanTag);
+            photographerPageDivTag.appendChild(photographerPageTag);       
+    
+        });
 
 
         }
