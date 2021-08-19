@@ -28,17 +28,22 @@ header i {
   margin: 0 3px;
 }
 
-.return-main {
+#return-main {
+  display: none;
   background: #db8876;
   border-radius: 10px;
   color: black;
   font-weight: bolder;
-  position: absolute;
+  position: fixed;
   left: 669px;
   top: 10px;
   height: 30px;
   width: 182px;
-  justify-content: center;
+  text-align: center;
+}
+
+#return-main {
+  margin-top: 4px;
 }
 
 #header-navbar {
@@ -58,6 +63,7 @@ header span,
   padding: 1px 6px;
   color: #911c1c;
   font-weight: bolder;
+  margin-right: 5px;
 }
 
 main {

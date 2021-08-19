@@ -1,11 +1,24 @@
 ////////
 
+//quand je scroll la page passer au contenu apparait.
+const returnMain = document.getElementById("return-main");
+let home = document.getElementById("home");
+
+/// launch div return-main
+function launchReturnMain() {
+  returnMain.style.display = "block";
+}
+
+home.addEventListener("wheel", launchReturnMain);
+returnMain.addEventListener("click", home);
+
+///
+
 async function photographerPageIndex() {
   //const res = await fetch("https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Front-End+V2/P5+Javascript+%26+Accessibility/FishEyeData.json");
   //we can't fetch the file directly from aws because of CORS policy
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
-  console.log(data);
   let tags = new Set();
 
   data.photographers.forEach((photographer) => {
@@ -59,17 +72,6 @@ async function photographerPageIndex() {
     photographerSection.appendChild(photographerLink);
     photographerSection.appendChild(photographerDivPresentation);
     photographersContainer.appendChild(photographerSection);
-
-    ////////
-    /* const photographerTag = document.createElement("a");
-        photographerTag.setAttribute("href", "#");
-    
-        const photographerSpanTag = document.createElement("span");
-        photographerSpanTag.append("#"+ photographer.tags);
-
-        photographerTag.append(photographerSpanTag);
-        photographerDivTag.append(photographerTag);        
-        console.log(photographerSpanTag);*/
 
     photographer.tags.forEach((tag) => {
       tags.add(tag);

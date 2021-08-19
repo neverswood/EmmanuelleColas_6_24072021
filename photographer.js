@@ -89,7 +89,6 @@ async function photographerPage() {
 
       const photographerPagePrice = document.querySelector(".price");
       photographerPagePrice.innerHTML = `${photo.price}€ / jour`;
-      console.log(photographerPagePrice);
 
       //photographerPageDivLike.appendChild(photographerPagePrice);
 
@@ -115,8 +114,6 @@ async function photographerPage() {
 
   function launchModal() {
     modalbg.style.display = "block";
-    //modalbg.className = "show-modal";
-    console.log("lol");
   }
 }
 photographerPage();
@@ -178,7 +175,3 @@ async function photographerPageWork() {
   photographerPageDivLike.innerHTML = `${sumLike}`;
 }
 photographerPageWork();
-
-console.log("tata");
-
-//console.log(launchModal());
