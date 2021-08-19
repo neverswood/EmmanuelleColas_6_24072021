@@ -7,15 +7,12 @@ async function photographerPageIndex() {
     const data = await res.json();
     console.log(data);
     let tags = new Set();
+
     data.photographers.forEach( photographer => {
 
-    
-
-       photographer.tags.forEach(tag => {
-            tags.add(tag);
-        });
-
         const photographersContainer = document.getElementById("photographers");
+
+        
         const photographerSection = document.createElement("section");
         photographerSection.setAttribute("class", "photographer");
         photographerSection.setAttribute("aria-label", "photographer link");
@@ -31,7 +28,7 @@ async function photographerPageIndex() {
         photographerH2.innerHTML = photographer.name;
 
         const photographerDivPresentation = document.createElement("div");
-        photographerDivPresentation.setAttribute("class", "photgrapher_presentation");
+        photographerDivPresentation.setAttribute("class", "photographer_presentation");
 
         const photographerH3 = document.createElement("h3");
         photographerH3.innerHTML = photographer.city + "," + " " + photographer.country;
@@ -43,7 +40,11 @@ async function photographerPageIndex() {
         photographerSpan.innerHTML = photographer.price + "€/jour";
 
         const photographerDivTag = document.createElement("div");
-        photographerDivTag.setAttribute("class", "photographer_tag");
+        photographerDivTag.setAttribute("class", "photographer-tag");
+
+
+
+
 
 
         
@@ -61,25 +62,37 @@ async function photographerPageIndex() {
 
 
         ////////
-
-        
-    tags.forEach( tag => {
-
-  
-        const photographerTag = document.createElement("a");
+       /* const photographerTag = document.createElement("a");
         photographerTag.setAttribute("href", "#");
-
-        const photographerSpanTag = document.createElement("span");
-        photographerSpanTag.append("#"+ tag);
-
-        photographerTag.appendChild(photographerSpanTag);
-        photographerDivTag.appendChild(photographerTag);        
-
-    });
-
-
-    });
     
+        const photographerSpanTag = document.createElement("span");
+        photographerSpanTag.append("#"+ photographer.tags);
+
+        photographerTag.append(photographerSpanTag);
+        photographerDivTag.append(photographerTag);        
+        console.log(photographerSpanTag);*/
+        
+
+
+          photographer.tags.forEach( tag => {
+            tags.add(tag);
+
+            const photographerTag = document.createElement("a");
+            photographerTag.setAttribute("href", "#");
+  
+            let photographerSpanTag = document.createElement("span");
+            photographerSpanTag.append("#"+ tag);
+    
+            photographerTag.append(photographerSpanTag);
+            photographerDivTag.append(photographerTag);       
+
+    
+        }); 
+
+
+
+    });
+
     
     tags.forEach( tag => {
 
@@ -95,8 +108,9 @@ async function photographerPageIndex() {
         navBarDiv.appendChild(navBarA);
         navBarContainer.appendChild(navBarDiv);
 
-
     });
+
+
 
 
 }

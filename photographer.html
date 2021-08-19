@@ -22,6 +22,46 @@
     <main id="photographer-page">
 
         <section id="presentation-photographer"></section>
+        <section id="work-photographer">
+            <div class="sorting"></div>
+            <div class="box"></div>
+            <div class="likes">
+                <span class="totalLike"></span>
+                <span class="price"></span>
+            </div>
+        </section>
+        <section id="modal-photographer">
+            <div class="bground">
+                <div class="content">
+                    <span class="close" id="close"></span>
+                    <div class="modal-body">
+                        <form name="contact" id="sectionForm" class="sectionForm" action="photographer.html"
+                            method="get">
+                            <div class="formData">
+                                <label for="first">Prénom</label><br>
+                                <input class="text-control" class="not-valid" type="text" id="first" name="first" /><br>
+                                <span class="error" id="firstError"></span>
+                            </div>
+                            <div class="formData">
+                                <label for="last">Nom</label><br>
+                                <input class="text-control" type="text" id="last" name="last" /><br>
+                                <span class="error" id="lastError"></span>
+                            </div>
+                            <div class="formData">
+                                <label for="email">E-mail</label><br>
+                                <input class="text-control" type="email" id="email" name="email" /><br>
+                                <span class="error" id="emailError"></span>
+                            </div>
+                            <div>
+                                <label for="message">Votre message</label><br>
+                                <input class="text-control" type="text" id="message" name="message" /><br>
+                            </div>
+                            <input class="btn-submit" type="submit" class="button" value="Envoyer" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
     </main>

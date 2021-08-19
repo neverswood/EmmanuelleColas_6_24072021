@@ -87,7 +87,7 @@ main {
   margin: 148px 90px 10px 90px;
 }
 
-img {
+.photographer img {
   object-fit: cover;
   width: 200px;
   height: 200px;
@@ -131,10 +131,14 @@ img {
 #presentation-photographer {
   display: flex;
   background-color: #fafafa;
-  margin: 35px 0 0 0;
-  padding: 0 35px;
+  margin: 35px 0 10px 0;
+  padding: 0 35px 50px 35px;
   width: 100%;
   justify-content: space-between;
+}
+
+#presentation-photographer h2 {
+  color: #901c1c;
 }
 
 .photographer-name {
@@ -144,7 +148,11 @@ img {
   margin: 45px 0 0 0;
 }
 
-.button {
+.photographerPage-tag a {
+  margin-right: 5px;
+}
+
+.open {
   background-color: #901c1c;
   height: 40px;
   color: white;
@@ -155,6 +163,100 @@ img {
 
 .image-photographer {
   margin: 50px 0 0 200px;
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+}
+
+.sorting label {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.sorting select {
+  background-color: #901c1c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 170px;
+  height: 40px;
+  padding: 0 10px;
+}
+/*
+.sorting select::after {
+}*/
+
+.image-photographerBox {
+  width: 300px;
+  height: 300px;
+  margin: 50px 50px 0 0;
+  border-radius: 5px;
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.presentation-photo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #901c1c;
+  height: 55px;
+}
+
+.presentation-photo p {
+  font-size: 20px;
+}
+
+.presentation-photo span {
+  margin-right: 80px;
+  font-size: 17px;
+}
+
+.likes {
+  height: 70px;
+  width: 355px;
+  background-color: #db8876;
+  position: fixed;
+  right: 40px;
+  bottom: 0;
+  border-radius: 5px 5px 0 0;
+}
+
+/* Modal */
+
+#modal-photographer {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  /* overflow: auto;*/
+}
+
+#modal-photographer .show-modal {
+  display: block;
+}
+
+.bground {
+  margin: 5% auto;
+  width: 100%;
+  max-width: 500px;
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+  background: #232323;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  padding-top: 10px;
 }
 
 @media screen and (max-width: 764px) {
@@ -189,5 +291,15 @@ img {
   .photographer {
     width: 100%;
     margin: 100px 0;
+  }
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
