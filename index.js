@@ -1,6 +1,5 @@
 ////////
 
-//quand je scroll la page passer au contenu apparait.
 const returnMain = document.getElementById("return-main");
 let home = document.getElementById("home");
 
@@ -20,6 +19,7 @@ async function photographerPageIndex() {
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
   let tags = new Set();
+  let tagother = 0;
 
   data.photographers.forEach((photographer) => {
     const photographersContainer = document.getElementById("photographers");
@@ -85,6 +85,21 @@ async function photographerPageIndex() {
       photographerTag.append(photographerSpanTag);
       photographerDivTag.append(photographerTag);
     });
+    // const tags = photographer.tags;
+    /*
+    function sortPhotographer(el) {
+      if (el.tags === photographer.tags) {
+        return true;
+      } else {
+        tagother++;
+        return false;
+      }
+    }
+    let phototag = photographer.tags;
+    let arrtag = phototag.filter(sortPhotographer);
+    console.log(arrtag);
+
+    arrtag.addEventListener("click", sortPhotographer);*/
   });
 
   tags.forEach((tag) => {

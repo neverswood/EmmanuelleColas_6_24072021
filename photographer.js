@@ -1,6 +1,4 @@
 async function photographerPage() {
-  //const res = await fetch("https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Front-End+V2/P5+Javascript+%26+Accessibility/FishEyeData.json");
-  //we can't fetch the file directly from aws because of CORS policy
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
 
@@ -9,12 +7,6 @@ async function photographerPage() {
   let tags = new Set();
 
   data.photographers.forEach((photo) => {
-    ///
-    photo.tags.forEach((tag) => {
-      tags.add(tag);
-    });
-
-    //////
     if (photo.id == queryPhotographerId) {
       const photographerPageSection = document.getElementById(
         "presentation-photographer"
@@ -34,9 +26,21 @@ async function photographerPage() {
       const photographerPageDivTag = document.createElement("div");
       photographerPageDivTag.setAttribute("class", "photographerPage-tag");
 
+      photo.tags.forEach((tag) => {
+        tags.add(tag);
+
+        const photographerPageTag = document.createElement("a");
+        photographerPageTag.setAttribute("href", "#");
+
+        let photographerPageSpanTag = document.createElement("span");
+        photographerPageSpanTag.append("#" + tag);
+
+        photographerPageTag.appendChild(photographerPageSpanTag);
+        photographerPageDivTag.appendChild(photographerPageTag);
+      });
+
       const photographerPageButton = document.createElement("button");
       photographerPageButton.setAttribute("class", "open");
-      photographerPageButton.setAttribute("id", "toto");
       photographerPageButton.innerHTML = "Contactez-moi";
 
       const photographerPageImage = document.createElement("img");
@@ -57,8 +61,6 @@ async function photographerPage() {
 
       ////
 
-      const photographerSectionWork =
-        document.getElementById("work-photographer");
       const photographerDivSorting = document.querySelector(".sorting");
 
       const photographerPageLabel = document.createElement("label");
@@ -88,22 +90,7 @@ async function photographerPage() {
       photographerDivSorting.appendChild(photographerPageSelect);
 
       const photographerPagePrice = document.querySelector(".price");
-      photographerPagePrice.innerHTML = `${photo.price}€ / jour`;
-
-      //photographerPageDivLike.appendChild(photographerPagePrice);
-
-      ///
-
-      tags.forEach((tag) => {
-        const photographerPageTag = document.createElement("a");
-        photographerPageTag.setAttribute("href", "#");
-
-        let photographerPageSpanTag = document.createElement("span");
-        photographerPageSpanTag.append("#" + tag);
-
-        photographerPageTag.appendChild(photographerPageSpanTag);
-        photographerPageDivTag.appendChild(photographerPageTag);
-      });
+      photographerPagePrice.innerHTML = photo.price + "€ / jour";
     }
   });
 
@@ -124,8 +111,6 @@ photographerPage();
         modalContent.appendChild(modalH1);*/
 
 async function photographerPageWork() {
-  //const res = await fetch("https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/Front-End+V2/P5+Javascript+%26+Accessibility/FishEyeData.json");
-  //we can't fetch the file directly from aws because of CORS policy
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
   const photog = new URLSearchParams(window.location.search);
@@ -138,10 +123,14 @@ async function photographerPageWork() {
     if (medias.photographerId == queryPhotographerId) {
       sumLike += medias.likes;
 
-      const photographerDivBox = document.querySelector(".box");
+      const photographerPageBoxListImage =
+        document.querySelector(".box-list-image");
 
-      const photographerPagePhotoLink = document.createElement("a");
-      photographerPagePhotoLink.setAttribute("href", "modal");
+      const photographerPageBoxLiImage = document.createElement("li");
+
+      const photographerPageBoxAImage = document.createElement("a");
+      photographerPageBoxAImage.setAttribute("href", "#");
+      photographerPageBoxAImage.setAttribute("class", "image");
 
       const photographerPageImageBox = document.createElement("img");
       photographerPageImageBox.setAttribute(
@@ -150,6 +139,22 @@ async function photographerPageWork() {
       );
       photographerPageImageBox.setAttribute("alt", "");
       photographerPageImageBox.setAttribute("class", "image-photographerBox");
+
+      //const photographerPageVideoBox = document.querySelector(".video");
+
+      const photographerVideoSource = document.getElementById(".mp4");
+      //let video = `/Sample_photos/${medias.photographerId}/${medias.video}`;
+      //photographerVideoSource.setAttribute("type", "video/mp4");
+      /*photographerVideoSource.setAttribute(
+        "src",
+        `/Sample_photos/${medias.photographerId}/${medias.video}`
+      );*/
+      photographerVideoSource.innerHTML = `/Sample_photos/${medias.photographerId}/video/${medias.video}`;
+
+      photographerPageBoxListImage.append(photographerPageBoxLiImage);
+      photographerPageBoxLiImage.appendChild(photographerPageBoxAImage);
+      photographerPageBoxAImage.appendChild(photographerPageImageBox);
+      //photographerPageVideoBox.appendChild(photographerVideoSource);
 
       const photographerPageImageDiv = document.createElement("div");
       photographerPageImageDiv.setAttribute("class", "presentation-photo");
@@ -162,16 +167,9 @@ async function photographerPageWork() {
 
       photographerPageImageDiv.appendChild(photographerPageImagePTitle);
       photographerPageImageDiv.appendChild(photographerPageImageSpanLike);
-      photographerPagePhotoLink.appendChild(photographerPageImageBox);
-      photographerPagePhotoLink.appendChild(photographerPageImageDiv);
-      photographerDivBox.append(photographerPagePhotoLink);
-
-      ///lauch modal
     }
   });
-  /*data.media.Map =*/
-  const photographerPageDivLike = document.querySelector(".likes");
-
-  photographerPageDivLike.innerHTML = `${sumLike}`;
+  const photographerPageDivLike = document.querySelector(".totalLike");
+  photographerPageDivLike.innerHTML = `${sumLike} <i class="fas fa-heart"></i>`;
 }
 photographerPageWork();
