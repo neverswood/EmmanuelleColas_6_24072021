@@ -145,11 +145,11 @@ async function photographerPageWork() {
       const photographerVideoSource = document.getElementById(".mp4");
       //let video = `/Sample_photos/${medias.photographerId}/${medias.video}`;
       //photographerVideoSource.setAttribute("type", "video/mp4");
-      /*photographerVideoSource.setAttribute(
+      photographerVideoSource.setAttribute(
         "src",
-        `/Sample_photos/${medias.photographerId}/${medias.video}`
-      );*/
-      photographerVideoSource.innerHTML = `/Sample_photos/${medias.photographerId}/video/${medias.video}`;
+        `/Sample_photos/${medias.photographerId}/video/${medias.video}.mp4`
+      );
+      //photographerVideoSource.innerHTML = `/Sample_photos/${medias.photographerId}/video/${medias.video}`;
 
       photographerPageBoxListImage.append(photographerPageBoxLiImage);
       photographerPageBoxLiImage.appendChild(photographerPageBoxAImage);
