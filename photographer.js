@@ -109,7 +109,6 @@ async function photographerPage() {
   const modalbg = document.querySelector(".bground");
   const close = document.getElementById("close");
   const modalName = document.getElementById("modal-name");
-  //const modalDivMessage = document.querySelector(".modal-message");
 
   // Launch modal
   modalBtn.addEventListener("click", launchModal);
@@ -120,9 +119,6 @@ async function photographerPage() {
     document.getElementById("sectionForm").className = "sectionFormOpen";
     document.getElementById("modal-name").style.display = "block";
     document.getElementById("modal-message").style.display = "none";
-    //modalName.style.display = "block";
-    //modalMessage.style.display = "none";
-    //document.getElementById("modal-message").className = "modal-message-close";
   }
 
   // Close modal
@@ -134,12 +130,8 @@ async function photographerPage() {
   close.addEventListener("click", closeModal);
 }
 photographerPage();
-/* const modalContent = document.querySelector(".content");
-        const modalH1 = document.createElement("h1");
-        modalH1.innerHTML = `Contactez-moi ${photo.Id}`;
 
-        modalContent.appendChild(modalH1);*/
-
+////
 async function photographerPageWork() {
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
@@ -270,15 +262,11 @@ form.addEventListener("submit", (e) => {
 
   if (!error) {
     console.log("modal-name");
-    //document.getElementById("modal-name").className = "modal-nameClose";
     document.getElementById("modal-name").style.display = "none";
 
     document.getElementById("sectionForm").className = "sectionFormClose";
     document.getElementById("modal-message").style.display = "block";
     document.getElementById("modal-message").innerHTML =
       "Votre message a bien été envoyé !";
-    //modalName.innerHTML = "Votre message a bien été envoyé !";
-
-    // modalMessage.innerHTML = "Votre message a bien été envoyé !";
   }
 });
