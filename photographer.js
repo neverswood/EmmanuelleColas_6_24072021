@@ -1,3 +1,6 @@
+const modalContact = document.querySelector(".modal-body");
+let modalMessage = document.getElementById("modal-message");
+
 async function photographerPage() {
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
@@ -91,17 +94,44 @@ async function photographerPage() {
 
       const photographerPagePrice = document.querySelector(".price");
       photographerPagePrice.innerHTML = photo.price + "€ / jour";
+
+      const modalContact = document.querySelector(".modal-body");
+      const modalDivName = document.createElement("div");
+      modalDivName.setAttribute("id", "modal-name");
+      modalDivName.innerHTML = "Contactez-moi" + " " + photo.name;
+
+      modalContact.before(modalDivName);
     }
   });
 
+  const bodystyle = document.querySelector("body");
   const modalBtn = document.querySelector(".open");
-  const modalbg = document.querySelector("#modal-photographer");
+  const modalbg = document.querySelector(".bground");
+  const close = document.getElementById("close");
+  const modalName = document.getElementById("modal-name");
+  //const modalDivMessage = document.querySelector(".modal-message");
 
+  // Launch modal
   modalBtn.addEventListener("click", launchModal);
 
   function launchModal() {
     modalbg.style.display = "block";
+    bodystyle.style.position = "fixed";
+    document.getElementById("sectionForm").className = "sectionFormOpen";
+    document.getElementById("modal-name").style.display = "block";
+    document.getElementById("modal-message").style.display = "none";
+    //modalName.style.display = "block";
+    //modalMessage.style.display = "none";
+    //document.getElementById("modal-message").className = "modal-message-close";
   }
+
+  // Close modal
+  function closeModal() {
+    modalbg.style.display = "none";
+    bodystyle.style.position = "relative";
+  }
+
+  close.addEventListener("click", closeModal);
 }
 photographerPage();
 /* const modalContent = document.querySelector(".content");
@@ -120,11 +150,10 @@ async function photographerPageWork() {
   data.media.forEach((medias) => {
     ////section work
 
-    if (medias.photographerId == queryPhotographerId) {
+    if (medias.photographerId === queryPhotographerId) {
       sumLike += medias.likes;
 
-      const photographerPageBoxListImage =
-        document.querySelector(".box-list-image");
+      const photographerPageBoxListImage = document.querySelector(".box-list");
 
       const photographerPageBoxLiImage = document.createElement("li");
 
@@ -132,44 +161,124 @@ async function photographerPageWork() {
       photographerPageBoxAImage.setAttribute("href", "#");
       photographerPageBoxAImage.setAttribute("class", "image");
 
-      const photographerPageImageBox = document.createElement("img");
-      photographerPageImageBox.setAttribute(
-        "src",
-        `/Sample_Photos/${medias.photographerId}/${medias.image}`
-      );
-      photographerPageImageBox.setAttribute("alt", "");
-      photographerPageImageBox.setAttribute("class", "image-photographerBox");
+      if (medias.image !== undefined) {
+        const photographerPageImageBox = document.createElement("img");
+        photographerPageImageBox.setAttribute(
+          "src",
+          `/Sample_photos/${medias.photographerId}/${medias.image}`
+        );
+        photographerPageImageBox.setAttribute("alt", "");
+        photographerPageImageBox.setAttribute("class", "image-photographerBox");
+        photographerPageBoxAImage.appendChild(photographerPageImageBox);
 
-      //const photographerPageVideoBox = document.querySelector(".video");
+        const photographerPageImageDiv = document.createElement("div");
+        photographerPageImageDiv.setAttribute("class", "presentation-photo");
 
-      const photographerVideoSource = document.getElementById(".mp4");
-      //let video = `/Sample_photos/${medias.photographerId}/${medias.video}`;
-      //photographerVideoSource.setAttribute("type", "video/mp4");
-      photographerVideoSource.setAttribute(
-        "src",
-        `/Sample_photos/${medias.photographerId}/video/${medias.video}.mp4`
-      );
-      //photographerVideoSource.innerHTML = `/Sample_photos/${medias.photographerId}/video/${medias.video}`;
+        const photographerPageImagePTitle = document.createElement("p");
+        photographerPageImagePTitle.innerHTML = `${medias.title}`;
 
+        const photographerPageImageSpanLike = document.createElement("span");
+        photographerPageImageSpanLike.innerHTML = `${medias.likes} <i class="fas fa-heart"></i>`;
+
+        photographerPageBoxAImage.appendChild(photographerPageImageDiv);
+        photographerPageImageDiv.appendChild(photographerPageImagePTitle);
+        photographerPageImageDiv.appendChild(photographerPageImageSpanLike);
+      }
+
+      const photographerPageVideoBox = document.getElementById("video");
+
+      if (medias.video !== undefined) {
+        const photographerVideoSource = document.createElement("source");
+        photographerVideoSource.setAttribute("type", "video/mp4");
+        photographerVideoSource.setAttribute(
+          "src",
+
+          `/Sample_Photos/${medias.photographerId}/${medias.video}`
+        );
+        photographerPageVideoBox.appendChild(photographerVideoSource);
+
+        const photographerPageBoxAVideo = document.querySelector(".video-link");
+
+        const photographerPageVideoDiv = document.createElement("div");
+        photographerPageVideoDiv.setAttribute("class", "presentation-video");
+
+        const photographerPageVideoPTitle = document.createElement("p");
+        photographerPageVideoPTitle.innerHTML = `${medias.title}`;
+
+        const photographerPageVideoSpanLike = document.createElement("span");
+        photographerPageVideoSpanLike.innerHTML = `${medias.likes} <i class="fas fa-heart"></i>`;
+
+        photographerPageBoxAVideo.appendChild(photographerPageVideoDiv);
+        photographerPageVideoDiv.appendChild(photographerPageVideoPTitle);
+        photographerPageVideoDiv.appendChild(photographerPageVideoSpanLike);
+      }
+
+      console.log(typeof medias.video);
       photographerPageBoxListImage.append(photographerPageBoxLiImage);
       photographerPageBoxLiImage.appendChild(photographerPageBoxAImage);
-      photographerPageBoxAImage.appendChild(photographerPageImageBox);
-      //photographerPageVideoBox.appendChild(photographerVideoSource);
-
-      const photographerPageImageDiv = document.createElement("div");
-      photographerPageImageDiv.setAttribute("class", "presentation-photo");
-
-      const photographerPageImagePTitle = document.createElement("p");
-      photographerPageImagePTitle.innerHTML = `${medias.title}`;
-
-      const photographerPageImageSpanLike = document.createElement("span");
-      photographerPageImageSpanLike.innerHTML = `${medias.likes} <i class="fas fa-heart"></i>`;
-
-      photographerPageImageDiv.appendChild(photographerPageImagePTitle);
-      photographerPageImageDiv.appendChild(photographerPageImageSpanLike);
     }
   });
   const photographerPageDivLike = document.querySelector(".totalLike");
   photographerPageDivLike.innerHTML = `${sumLike} <i class="fas fa-heart"></i>`;
 }
 photographerPageWork();
+
+// Validation modal-contact
+
+const form = document.getElementById("sectionForm");
+
+function addError(label, message) {
+  document.getElementById(label).style.border = "2px solid red";
+  document.getElementById(`${label}Error`).textContent = message;
+}
+
+function removeError(label) {
+  document.getElementById(label).style.border = "none";
+  document.getElementById(`${label}Error`).textContent = "";
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const firstName = document.getElementById("first");
+  const lastName = document.getElementById("last");
+  const email = document.getElementById("email");
+  const modalText = document.getElementById("modal-name");
+  const emailRegex =
+    /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/;
+  let error = false;
+
+  if (firstName.value.length < 2) {
+    addError("first", "Veuillez entrer 2 caractères minimum");
+    error = true;
+  } else {
+    removeError("first");
+  }
+
+  if (lastName.value.length < 2) {
+    addError("last", "Veuillez entrer 2 caractères minimum");
+    error = true;
+  } else {
+    removeError("last");
+  }
+
+  if (!email.value.match(emailRegex)) {
+    addError("email", "Veuillez entrer un email valide");
+    error = true;
+  } else {
+    removeError("email");
+  }
+
+  if (!error) {
+    console.log("modal-name");
+    //document.getElementById("modal-name").className = "modal-nameClose";
+    document.getElementById("modal-name").style.display = "none";
+
+    document.getElementById("sectionForm").className = "sectionFormClose";
+    document.getElementById("modal-message").style.display = "block";
+    document.getElementById("modal-message").innerHTML =
+      "Votre message a bien été envoyé !";
+    //modalName.innerHTML = "Votre message a bien été envoyé !";
+
+    // modalMessage.innerHTML = "Votre message a bien été envoyé !";
+  }
+});

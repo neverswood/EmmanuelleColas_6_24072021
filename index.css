@@ -159,6 +159,7 @@ main {
 }
 
 .open {
+  order: 1;
   background-color: #901c1c;
   height: 40px;
   color: white;
@@ -173,6 +174,7 @@ main {
   width: 200px;
   height: 200px;
   border-radius: 100px;
+  order: 2;
 }
 
 .sorting label {
@@ -196,22 +198,34 @@ main {
 .image-photographerBox {
   width: 300px;
   height: 300px;
-  margin: 50px 50px 0 0;
+  margin: 50px 0 0 0;
   border-radius: 5px;
   object-fit: cover;
 }
 
-.box-list-image {
+.box-list {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   margin-top: 50px;
+  padding: 0;
 }
 
-.video {
+.box-list li {
+  margin: 0 60px;
+}
+
+.video-link {
+  width: 300px;
+  margin: 0 60px;
+}
+
+#video {
+  object-fit: cover;
   width: 300px;
   height: 300px;
+  margin: 50px 0 0 0;
+  border-radius: 5px;
 }
 
 .presentation-photo {
@@ -223,26 +237,45 @@ main {
 }
 
 .presentation-photo p {
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .presentation-photo span {
-  margin-right: 80px;
+  font-size: 17px;
+}
+
+.presentation-video {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #901c1c;
+  height: 55px;
+}
+
+.presentation-video p {
+  font-size: 17px;
+}
+
+.presentation-video span {
   font-size: 17px;
 }
 
 .likes {
-  height: 70px;
-  width: 355px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 45px;
+  width: 285px;
   background-color: #db8876;
   position: fixed;
   right: 40px;
   bottom: 0;
   border-radius: 5px 5px 0 0;
+  font-weight: bold;
 }
 
 /* Modal */
-
+/*
 #modal-photographer {
   display: none;
   position: fixed;
@@ -251,20 +284,44 @@ main {
   top: 0;
   height: 100%;
   width: 100%;
-  /* overflow: auto;*/
-}
-
+}*/
+/*
 #modal-photographer .show-modal {
   display: block;
-}
+}*/
 
 .bground {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: white;
+  /*margin: auto;
+  z-index: 1;
+  height: 900px;
+  width: 100%;
+  max-width: 405px;
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+  border-radius: 5px;
+  overflow: auto;
+  position: relative;
+  color: #fff;
+  padding-top: 10px;
+  background-color: #db8876;*/
+}
+
+.content {
   margin: 5% auto;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
-  background: #232323;
+  background: #db8876;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -272,17 +329,111 @@ main {
   padding-top: 10px;
 }
 
+.sectionFormOpen {
+  display: block;
+}
+
+.sectionFormClose {
+  display: none;
+}
+
+.formData {
+  margin-bottom: 10px;
+  margin: 0 20px;
+}
+
+label {
+  color: black;
+  font-size: 22px;
+}
+
+.text-control {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+}
+
+.text-control--modified {
+  width: 100%;
+  height: 100px;
+  border: none;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 42px;
+  height: 42px;
+  opacity: 1;
+  cursor: pointer;
+  transform: scale(0.7);
+}
+
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 33px;
+  width: 3px;
+  background-color: #fff;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.btn-submit {
+  background-color: #901c1c;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  width: 115px;
+  height: 45px;
+  margin: 20px;
+}
+
+#modal-name {
+  display: block;
+  color: black;
+  font-size: 45px;
+  margin: 0 100px 22px 18px;
+}
+
+#modal-message {
+  height: 90px;
+  color: black;
+  font-size: 20px;
+  margin: 90px;
+}
+
+.error {
+  font-size: 1rem;
+  color: #c31212;
+  display: block;
+}
+
 @media screen and (max-width: 764px) {
-  .logo {
-    position: absolute;
-    top: 40px;
-    left: 30px;
-    margin: 0;
+  header {
+    padding: 0;
+    max-width: 0;
   }
 
-  .header-navbar {
+  #logo {
+    position: absolute;
+    margin: 0 0 0 10px;
+  }
+
+  #header-navbar {
+    position: absolute;
+    top: 100px;
     flex-wrap: wrap;
-    margin: 50px 30px 0 30px;
     justify-content: center;
   }
 
@@ -295,6 +446,10 @@ main {
     flex-direction: column;
   }
 
+  #photographers {
+    margin-top: 100px;
+  }
+
   .title {
     font-size: 14px;
     top: 35px;
@@ -303,7 +458,85 @@ main {
 
   .photographer {
     width: 100%;
-    margin: 100px 0;
+    margin: 70px 0;
+  }
+
+  /*page photographer */
+
+  #presentation-photographer {
+    background-color: white;
+    padding: 0;
+    margin: 35px 0 10px 10px;
+    max-width: 310px;
+  }
+
+  #photographer-page {
+    margin: 0;
+  }
+
+  .photographer-name {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  #presentation-photographer h2 {
+    font-size: 20px;
+  }
+
+  #presentation-photographer p {
+    font-size: 12px;
+  }
+
+  .open {
+    order: 2;
+    position: fixed;
+    right: 110px;
+    bottom: 0;
+    margin: 50px;
+    padding: 10px 35px;
+  }
+
+  .image-photographer {
+    order: 1;
+    margin: 0;
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    right: 30px;
+    top: 90px;
+  }
+
+  .video-link {
+    text-align: center;
+    width: 100%;
+    margin: 0 20px;
+  }
+
+  #video {
+    width: 100%;
+  }
+
+  .box-list {
+    margin-top: 7px;
+  }
+
+  .box-list li {
+    text-align: center;
+    width: 100%;
+    margin: 0 20px;
+  }
+
+  .image-photographerBox {
+    width: 100%;
+    margin: 0;
+  }
+
+  .sorting {
+    display: none;
+  }
+
+  .likes {
+    display: none;
   }
 }
 

@@ -25,13 +25,11 @@
         <section id="work-photographer">
             <div class="sorting"></div>
             <div class="box">
-                <ul class="box-list-image">
+                <ul class="box-list">
                     <a class="video-link">
-                        <video controls="controls" class="video">
-                            <source type="video/mp4" id="mp4">
-                            </source>
+                        <video id="video" poster="">
                         </video>
-                    </a>
+                    </a>-
                 </ul>
 
             </div>
@@ -44,6 +42,7 @@
             <div class="bground">
                 <div class="content">
                     <span class="close" id="close"></span>
+                    <div id="modal-message"></div>
                     <div class="modal-body">
                         <form name="contact" id="sectionForm" class="sectionForm" action="photographer.html"
                             method="get">
@@ -62,9 +61,9 @@
                                 <input class="text-control" type="email" id="email" name="email" /><br>
                                 <span class="error" id="emailError"></span>
                             </div>
-                            <div>
+                            <div class="formData">
                                 <label for="message">Votre message</label><br>
-                                <input class="text-control" type="text" id="message" name="message" /><br>
+                                <input class="text-control--modified" type="text" id="message" name="message" /><br>
                             </div>
                             <input class="btn-submit" type="submit" class="button" value="Envoyer" />
                         </form>
