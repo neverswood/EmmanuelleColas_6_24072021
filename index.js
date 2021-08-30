@@ -19,9 +19,13 @@ async function photographerPageIndex() {
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
   let tags = new Set();
+  const filterTag = new URLSearchParams(window.location.search);
+  const queryPhotographerId = parseInt(filterTag.getAll("#")[0]); //mettre pour filtre
   let tagother = 0;
 
   data.photographers.forEach((photographer) => {
+    if (photographer.tag == queryPhotographerId) {
+    }
     const photographersContainer = document.getElementById("photographers");
 
     const photographerSection = document.createElement("section");
@@ -72,6 +76,8 @@ async function photographerPageIndex() {
     photographerSection.appendChild(photographerLink);
     photographerSection.appendChild(photographerDivPresentation);
     photographersContainer.appendChild(photographerSection);
+
+    //const photographerfilter = document.getElementById("photographer");
 
     photographer.tags.forEach((tag) => {
       tags.add(tag);

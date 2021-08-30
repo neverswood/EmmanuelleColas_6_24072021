@@ -207,17 +207,14 @@ main {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+  place-content: center;
   margin-top: 50px;
   padding: 0;
 }
 
-.box-list li {
-  margin: 0 60px;
-}
-
-.video-link {
-  width: 300px;
-  margin: 0 60px;
+.media-video,
+.media-image {
+  margin: 0 70px 0 70px;
 }
 
 #video {
@@ -299,7 +296,7 @@ main {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: white;
+  background-color: rgba(26, 39, 156, 0.4);
   /*margin: auto;
   z-index: 1;
   height: 900px;
@@ -494,6 +491,14 @@ label {
     bottom: 0;
     margin: 50px;
     padding: 10px 35px;
+  }
+
+  /**/
+
+  .media-image,
+  .media-video {
+    width: 100%;
+    margin: 0 20px;
   }
 
   .image-photographer {
