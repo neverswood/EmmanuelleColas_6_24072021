@@ -1,5 +1,21 @@
+/// DOM Elements
+
+const bodystyle = document.querySelector("body");
+const photographerDivSorting = document.querySelector(".sorting");
+
+const modalbg = document.querySelector(".bground");
+const close = document.getElementById("close");
+const modalName = document.getElementById("modal-name");
+const photographerPageBoxListImage = document.querySelector(".box-list");
+
+const carouselSection = document.getElementById("carousel");
+const carouselDiv = document.getElementById("carousel__div");
+const carouselOl = document.querySelector(".carousel__viewport");
+
 const modalContact = document.querySelector(".modal-body");
 let modalMessage = document.getElementById("modal-message");
+
+///////////////////////////////////////////////////////////////////////////
 
 async function photographerPage() {
   const res = await fetch("/api/FishEyeData.json");
@@ -64,8 +80,6 @@ async function photographerPage() {
 
       ////
 
-      const photographerDivSorting = document.querySelector(".sorting");
-
       const photographerPageLabel = document.createElement("label");
       photographerPageLabel.setAttribute("for", "sorting");
       photographerPageLabel.innerHTML = "Trier par";
@@ -103,12 +117,7 @@ async function photographerPage() {
       modalContact.before(modalDivName);
     }
   });
-
-  const bodystyle = document.querySelector("body");
   const modalBtn = document.querySelector(".open");
-  const modalbg = document.querySelector(".bground");
-  const close = document.getElementById("close");
-  const modalName = document.getElementById("modal-name");
 
   // Launch modal
   modalBtn.addEventListener("click", launchModal);
@@ -131,7 +140,7 @@ async function photographerPage() {
 }
 photographerPage();
 
-////
+///////////////////////////////// Function with Json media ///////////////////////
 async function photographerPageWork() {
   const res = await fetch("/api/FishEyeData.json");
   const data = await res.json();
@@ -144,23 +153,62 @@ async function photographerPageWork() {
 
     if (medias.photographerId === queryPhotographerId) {
       sumLike += medias.likes;
-
-      const photographerPageBoxListImage = document.querySelector(".box-list");
+      let mediasLikes = medias.likes;
+      let likeElement = null;
 
       // video
-      const photographerPageVideoDiv = document.createElement("div");
-      photographerPageVideoDiv.setAttribute("class", "presentation-video");
 
-      const photographerPageVideoPTitle = document.createElement("p");
-      photographerPageVideoPTitle.innerHTML = `${medias.title}`;
-
-      const photographerPageVideoSpanLike = document.createElement("span");
-      photographerPageVideoSpanLike.innerHTML = `${medias.likes} <i class="fas fa-heart"></i>`;
-
-      photographerPageVideoDiv.appendChild(photographerPageVideoPTitle);
-      photographerPageVideoDiv.appendChild(photographerPageVideoSpanLike);
+      function incrementLike() {
+        mediasLikes++;
+        likeElement.innerHTML = `${mediasLikes} <i class="fas fa-heart" class="like"></i>`;
+      }
 
       if (medias.video !== undefined) {
+        const photographerVideoPresentation = document.createElement("div");
+        photographerVideoPresentation.setAttribute(
+          "class",
+          "presentation-video"
+        );
+
+        const photographerVideoPresentationChild =
+          document.createElement("div");
+        photographerVideoPresentationChild.setAttribute(
+          "class",
+          "child-presentation"
+        );
+
+        const photographerPageVideoTitle = document.createElement("p");
+        photographerPageVideoTitle.innerHTML = `${medias.title}`;
+
+        const photographerPageVideoDate = document.createElement("span");
+        photographerPageVideoDate.setAttribute("class", "date");
+        photographerPageVideoDate.innerHTML = `${medias.date}`;
+
+        const photographerPageVideoPrice = document.createElement("span");
+        photographerPageVideoPrice.setAttribute("class", "date");
+        photographerPageVideoPrice.innerHTML = `${medias.price}€`;
+
+        const photographerPageVideoLike = document.createElement("a");
+        photographerPageVideoLike.setAttribute("href", "#");
+        photographerPageVideoLike.setAttribute("id", "number-like");
+        photographerPageVideoLike.innerHTML = `${mediasLikes} <i class="fas fa-heart" class="like"></i>`;
+        likeElement = photographerPageVideoLike;
+
+        photographerPageVideoLike.addEventListener("click", incrementLike);
+
+        photographerVideoPresentation.appendChild(
+          photographerVideoPresentationChild
+        );
+        photographerVideoPresentation.appendChild(photographerPageVideoLike);
+        photographerVideoPresentationChild.appendChild(
+          photographerPageVideoTitle
+        );
+        photographerVideoPresentationChild.appendChild(
+          photographerPageVideoDate
+        );
+        photographerVideoPresentationChild.appendChild(
+          photographerPageVideoPrice
+        );
         const photographerDivMediaVideo = document.createElement("div");
         photographerDivMediaVideo.setAttribute("class", "media-video");
 
@@ -178,24 +226,56 @@ async function photographerPageWork() {
         photographerPageBoxListImage.appendChild(photographerDivMediaVideo);
         photographerVideo.appendChild(photographerVideoSource);
         photographerDivMediaVideo.insertBefore(photographerVideo, null);
-        photographerDivMediaVideo.appendChild(photographerPageVideoDiv);
+        photographerDivMediaVideo.appendChild(photographerVideoPresentation);
       }
 
       // Image
 
-      const photographerPresentationImage = document.createElement("div");
-      photographerPresentationImage.setAttribute("class", "presentation-photo");
-
-      const photographerPageImagePTitle = document.createElement("p");
-      photographerPageImagePTitle.innerHTML = `${medias.title}`;
-
-      const photographerPageImageSpanLike = document.createElement("span");
-      photographerPageImageSpanLike.innerHTML = `${medias.likes} <i class="fas fa-heart"></i>`;
-
-      photographerPresentationImage.appendChild(photographerPageImagePTitle);
-      photographerPresentationImage.appendChild(photographerPageImageSpanLike);
-
       if (medias.image !== undefined) {
+        const photographerPresentationImage = document.createElement("div");
+        photographerPresentationImage.setAttribute(
+          "class",
+          "presentation-photo"
+        );
+
+        const photographerImagePresentationChild =
+          document.createElement("div");
+        photographerImagePresentationChild.setAttribute(
+          "class",
+          "child-presentation"
+        );
+
+        const photographerPageImageTitle = document.createElement("p");
+        photographerPageImageTitle.innerHTML = `${medias.title}`;
+
+        const photographerPageImageDate = document.createElement("span");
+        photographerPageImageDate.setAttribute("class", "date");
+        photographerPageImageDate.innerHTML = `${medias.date}`;
+
+        const photographerPageImagePrice = document.createElement("span");
+        photographerPageImagePrice.setAttribute("class", "date");
+        photographerPageImagePrice.innerHTML = `${medias.price}€`;
+
+        const photographerPageImageLike = document.createElement("span");
+        photographerPageImageLike.innerHTML = `${medias.likes} <i class="fas fa-heart" id="like"></i>`;
+        likeElement = photographerPageImageLike;
+
+        photographerPageImageLike.addEventListener("click", incrementLike);
+
+        photographerPresentationImage.appendChild(
+          photographerImagePresentationChild
+        );
+        photographerPresentationImage.appendChild(photographerPageImageLike);
+        photographerImagePresentationChild.appendChild(
+          photographerPageImageTitle
+        );
+        photographerImagePresentationChild.appendChild(
+          photographerPageImageDate
+        );
+        photographerImagePresentationChild.appendChild(
+          photographerPageImagePrice
+        );
+
         const photographerDivMediaImage = document.createElement("div");
         photographerDivMediaImage.setAttribute("class", "media-image");
 
@@ -210,31 +290,52 @@ async function photographerPageWork() {
         photographerPageBoxListImage.appendChild(photographerDivMediaImage);
         photographerDivMediaImage.appendChild(photographerImage);
         photographerDivMediaImage.appendChild(photographerPresentationImage);
+
+        ///
+      }
+
+      //// Modal Carousel
+      if (medias.image !== undefined) {
+        const carouselLi = document.createElement("li");
+        carouselLi.setAttribute("id", "carousel__slide");
+        carouselLi.setAttribute("class", "carousel__slide");
+        carouselLi.setAttribute("tabindex", "0");
+
+        const carouselDivSnapper = document.createElement("div");
+        carouselDivSnapper.setAttribute("class", "carousel__snapper");
+
+        const carouselSlideLast = document.createElement("a");
+        carouselSlideLast.setAttribute("href", "#carousel__last");
+        carouselSlideLast.setAttribute("class", "carousel__last");
+        carouselSlideLast.innerHTML = `<i class="arrow"></i>`;
+
+        const carouselSlideRight = document.createElement("a");
+        carouselSlideRight.setAttribute("href", "#carousel__next");
+        carouselSlideRight.setAttribute("class", "carousel__next");
+        carouselSlideRight.innerHTML = `<i class="arrow"></i>`;
+
+        const imageCarousel = document.createElement("img");
+        imageCarousel.setAttribute("id", "mediaCarousel");
+        imageCarousel.innerHTML = `${medias.image}`;
+
+        carouselOl.appendChild(carouselLi);
+        carouselLi.appendChild(carouselDivSnapper);
+        carouselDivSnapper.appendChild(carouselSlideLast);
+        carouselDivSnapper.appendChild(imageCarousel);
+        carouselDivSnapper.appendChild(carouselSlideRight);
       }
     }
-
-    /*
-        const photographerPageVideoDiv = document.createElement("div");
-        photographerPageVideoDiv.setAttribute("class", "presentation-video");
-
-        const photographerPageVideoPTitle = document.createElement("p");
-        photographerPageVideoPTitle.innerHTML = `${medias.title}`;
-
-        const photographerPageVideoSpanLike = document.createElement("span");
-        photographerPageVideoSpanLike.innerHTML = `${medias.likes} <i class="fas fa-heart"></i>`;
-
-        photographerPageBoxAVideo.appendChild(photographerPageVideoDiv);
-        photographerPageVideoDiv.appendChild(photographerPageVideoPTitle);
-        photographerPageVideoDiv.appendChild(photographerPageVideoSpanLike);
-      }
-
-      console.log(typeof medias.video);
-      photographerPageBoxListImage.append(photographerPageBoxLiImage);
-      photographerPageBoxLiImage.appendChild(photographerPageBoxAImage);
-    }*/
   });
   const photographerPageDivLike = document.querySelector(".totalLike");
   photographerPageDivLike.innerHTML = `${sumLike} <i class="fas fa-heart"></i>`;
+
+  const mediaGallery = document.querySelectorAll(".image-photographerBox");
+
+  function launchCarousel() {
+    carouselSection.style.display = "block";
+    bodystyle.style.position = "fixed";
+  }
+  mediaGallery.forEach((img) => img.addEventListener("click", launchCarousel));
 }
 photographerPageWork();
 
