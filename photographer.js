@@ -6,7 +6,7 @@ const photographerDivSorting = document.querySelector(".sorting");
 const modalbg = document.querySelector(".bground");
 const close = document.getElementById("close");
 const modalName = document.getElementById("modal-name");
-const photographerPageBoxListImage = document.querySelector(".box-list");
+const photographerPageBoxList = document.querySelector(".box-list");
 
 const carouselSection = document.getElementById("carousel");
 const carouselDiv = document.getElementById("carousel__div");
@@ -156,62 +156,15 @@ async function photographerPageWork() {
       let mediasLikes = medias.likes;
       let likeElement = null;
 
-      // video
-
       function incrementLike() {
         mediasLikes++;
         likeElement.innerHTML = `${mediasLikes} <i class="fas fa-heart" class="like"></i>`;
       }
 
       if (medias.video !== undefined) {
-        const photographerVideoPresentation = document.createElement("div");
-        photographerVideoPresentation.setAttribute(
-          "class",
-          "presentation-video"
-        );
-
-        const photographerVideoPresentationChild =
-          document.createElement("div");
-        photographerVideoPresentationChild.setAttribute(
-          "class",
-          "child-presentation"
-        );
-
-        const photographerPageVideoTitle = document.createElement("p");
-        photographerPageVideoTitle.innerHTML = `${medias.title}`;
-
-        const photographerPageVideoDate = document.createElement("span");
-        photographerPageVideoDate.setAttribute("class", "date");
-        photographerPageVideoDate.innerHTML = `${medias.date}`;
-
-        const photographerPageVideoPrice = document.createElement("span");
-        photographerPageVideoPrice.setAttribute("class", "date");
-        photographerPageVideoPrice.innerHTML = `${medias.price}€`;
-
-        const photographerPageVideoLike = document.createElement("a");
-        photographerPageVideoLike.setAttribute("href", "#");
-        photographerPageVideoLike.setAttribute("id", "number-like");
-        photographerPageVideoLike.innerHTML = `${mediasLikes} <i class="fas fa-heart" class="like"></i>`;
-        likeElement = photographerPageVideoLike;
-
-        photographerPageVideoLike.addEventListener("click", incrementLike);
-
-        photographerVideoPresentation.appendChild(
-          photographerVideoPresentationChild
-        );
-        photographerVideoPresentation.appendChild(photographerPageVideoLike);
-        photographerVideoPresentationChild.appendChild(
-          photographerPageVideoTitle
-        );
-        photographerVideoPresentationChild.appendChild(
-          photographerPageVideoDate
-        );
-        photographerVideoPresentationChild.appendChild(
-          photographerPageVideoPrice
-        );
         const photographerDivMediaVideo = document.createElement("div");
         photographerDivMediaVideo.setAttribute("class", "media-video");
-
+        ////lolll
         const photographerVideo = document.createElement("video");
         photographerVideo.setAttribute("id", "video");
 
@@ -222,60 +175,21 @@ async function photographerPageWork() {
 
           `/Sample_Photos/${medias.photographerId}/${medias.video}`
         );
-
-        photographerPageBoxListImage.appendChild(photographerDivMediaVideo);
         photographerVideo.appendChild(photographerVideoSource);
-        photographerDivMediaVideo.insertBefore(photographerVideo, null);
-        photographerDivMediaVideo.appendChild(photographerVideoPresentation);
+
+        let [mediaPresentationElement, mediaLike] =
+          createMediaPresentationElement("presentation-video", medias);
+        likeElement = mediaLike;
+
+        mediaLike.addEventListener("click", incrementLike);
+        photographerDivMediaVideo.appendChild(photographerVideo);
+        photographerDivMediaVideo.appendChild(mediaPresentationElement);
+        photographerPageBoxList.appendChild(photographerDivMediaVideo);
       }
 
       // Image
 
       if (medias.image !== undefined) {
-        const photographerPresentationImage = document.createElement("div");
-        photographerPresentationImage.setAttribute(
-          "class",
-          "presentation-photo"
-        );
-
-        const photographerImagePresentationChild =
-          document.createElement("div");
-        photographerImagePresentationChild.setAttribute(
-          "class",
-          "child-presentation"
-        );
-
-        const photographerPageImageTitle = document.createElement("p");
-        photographerPageImageTitle.innerHTML = `${medias.title}`;
-
-        const photographerPageImageDate = document.createElement("span");
-        photographerPageImageDate.setAttribute("class", "date");
-        photographerPageImageDate.innerHTML = `${medias.date}`;
-
-        const photographerPageImagePrice = document.createElement("span");
-        photographerPageImagePrice.setAttribute("class", "date");
-        photographerPageImagePrice.innerHTML = `${medias.price}€`;
-
-        const photographerPageImageLike = document.createElement("span");
-        photographerPageImageLike.innerHTML = `${medias.likes} <i class="fas fa-heart" id="like"></i>`;
-        likeElement = photographerPageImageLike;
-
-        photographerPageImageLike.addEventListener("click", incrementLike);
-
-        photographerPresentationImage.appendChild(
-          photographerImagePresentationChild
-        );
-        photographerPresentationImage.appendChild(photographerPageImageLike);
-        photographerImagePresentationChild.appendChild(
-          photographerPageImageTitle
-        );
-        photographerImagePresentationChild.appendChild(
-          photographerPageImageDate
-        );
-        photographerImagePresentationChild.appendChild(
-          photographerPageImagePrice
-        );
-
         const photographerDivMediaImage = document.createElement("div");
         photographerDivMediaImage.setAttribute("class", "media-image");
 
@@ -287,9 +201,15 @@ async function photographerPageWork() {
         photographerImage.setAttribute("alt", "");
         photographerImage.setAttribute("class", "image-photographerBox");
 
-        photographerPageBoxListImage.appendChild(photographerDivMediaImage);
+        let [mediaPresentationElement, mediaLike] =
+          createMediaPresentationElement("presentation-photo", medias);
+        likeElement = mediaLike;
+
+        mediaLike.addEventListener("click", incrementLike);
+
         photographerDivMediaImage.appendChild(photographerImage);
-        photographerDivMediaImage.appendChild(photographerPresentationImage);
+        photographerDivMediaImage.appendChild(mediaPresentationElement);
+        photographerPageBoxList.appendChild(photographerDivMediaImage);
 
         ///
       }
@@ -337,6 +257,37 @@ async function photographerPageWork() {
   }
   mediaGallery.forEach((img) => img.addEventListener("click", launchCarousel));
 }
+
+function createMediaPresentationElement(className, medias) {
+  const mediaPresentation = document.createElement("div");
+  mediaPresentation.setAttribute("class", className);
+
+  const mediaPresentationChild = document.createElement("div");
+  mediaPresentationChild.setAttribute("class", "child-presentation");
+
+  const mediaTitle = document.createElement("p");
+  mediaTitle.innerHTML = `${medias.title}`;
+
+  const mediaDate = document.createElement("span");
+  mediaDate.setAttribute("class", "date");
+  mediaDate.innerHTML = `${medias.date}`;
+
+  const mediaPrice = document.createElement("span");
+  mediaPrice.setAttribute("class", "date");
+  mediaPrice.innerHTML = `${medias.price}€`;
+
+  const mediaLike = document.createElement("span");
+  mediaLike.innerHTML = `${medias.likes} <i class="fas fa-heart" class="like"></i>`;
+
+  mediaPresentation.appendChild(mediaPresentationChild);
+  mediaPresentation.appendChild(mediaLike);
+  mediaPresentationChild.appendChild(mediaTitle);
+  mediaPresentationChild.appendChild(mediaDate);
+  mediaPresentationChild.appendChild(mediaPrice);
+
+  return [mediaPresentation, mediaLike];
+}
+
 photographerPageWork();
 
 // Validation modal-contact
