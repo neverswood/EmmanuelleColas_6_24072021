@@ -5,15 +5,19 @@ const photographerDivSorting = document.querySelector(".sorting");
 
 const modalbg = document.querySelector(".bground");
 const close = document.getElementById("close");
+const closeCarousel = document.getElementById("closeCarousel");
 const modalName = document.getElementById("modal-name");
 const photographerPageBoxList = document.querySelector(".box-list");
 
 const carouselSection = document.getElementById("carousel");
 const carouselDiv = document.getElementById("carousel__div");
-const carouselOl = document.querySelector(".carousel__viewport");
+const carouselListe = document.querySelector(".carousel__viewport");
+const rightBtn = document.getElementById("right-btn");
+const leftBtn = document.getElementById("left-btn");
 
 const modalContact = document.querySelector(".modal-body");
 let modalMessage = document.getElementById("modal-message");
+const photographerPageDivLike = document.querySelector(".totalLike");
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -147,6 +151,7 @@ async function photographerPageWork() {
   const photog = new URLSearchParams(window.location.search);
   const queryPhotographerId = parseInt(photog.getAll("id")[0]);
   let sumLike = 0;
+  let position = 0;
 
   data.media.forEach((medias) => {
     ////section work
@@ -158,13 +163,17 @@ async function photographerPageWork() {
 
       function incrementLike() {
         mediasLikes++;
+        sumLike++;
+        console.log(sumLike);
         likeElement.innerHTML = `${mediasLikes} <i class="fas fa-heart" class="like"></i>`;
+        photographerPageDivLike.innerHTML = `${sumLike} <i class="fas fa-heart"></i>`;
       }
+      photographerPageDivLike.innerHTML = `${sumLike} <i class="fas fa-heart"></i>`;
 
       if (medias.video !== undefined) {
         const photographerDivMediaVideo = document.createElement("div");
         photographerDivMediaVideo.setAttribute("class", "media-video");
-        ////lolll
+
         const photographerVideo = document.createElement("video");
         photographerVideo.setAttribute("id", "video");
 
@@ -179,6 +188,7 @@ async function photographerPageWork() {
 
         let [mediaPresentationElement, mediaLike] =
           createMediaPresentationElement("presentation-video", medias);
+
         likeElement = mediaLike;
 
         mediaLike.addEventListener("click", incrementLike);
@@ -194,6 +204,7 @@ async function photographerPageWork() {
         photographerDivMediaImage.setAttribute("class", "media-image");
 
         const photographerImage = document.createElement("img");
+        photographerImage.setAttribute("id", "picture");
         photographerImage.setAttribute(
           "src",
           `/Sample_photos/${medias.photographerId}/${medias.image}`
@@ -213,41 +224,59 @@ async function photographerPageWork() {
 
         ///
       }
-
-      //// Modal Carousel
-      if (medias.image !== undefined) {
-        const carouselLi = document.createElement("li");
-        carouselLi.setAttribute("id", "carousel__slide");
-        carouselLi.setAttribute("class", "carousel__slide");
-        carouselLi.setAttribute("tabindex", "0");
-
-        const carouselDivSnapper = document.createElement("div");
-        carouselDivSnapper.setAttribute("class", "carousel__snapper");
-
-        const carouselSlideLast = document.createElement("a");
-        carouselSlideLast.setAttribute("href", "#carousel__last");
-        carouselSlideLast.setAttribute("class", "carousel__last");
-        carouselSlideLast.innerHTML = `<i class="arrow"></i>`;
-
-        const carouselSlideRight = document.createElement("a");
-        carouselSlideRight.setAttribute("href", "#carousel__next");
-        carouselSlideRight.setAttribute("class", "carousel__next");
-        carouselSlideRight.innerHTML = `<i class="arrow"></i>`;
-
-        const imageCarousel = document.createElement("img");
-        imageCarousel.setAttribute("id", "mediaCarousel");
-        imageCarousel.innerHTML = `${medias.image}`;
-
-        carouselOl.appendChild(carouselLi);
-        carouselLi.appendChild(carouselDivSnapper);
-        carouselDivSnapper.appendChild(carouselSlideLast);
-        carouselDivSnapper.appendChild(imageCarousel);
-        carouselDivSnapper.appendChild(carouselSlideRight);
-      }
     }
   });
-  const photographerPageDivLike = document.querySelector(".totalLike");
-  photographerPageDivLike.innerHTML = `${sumLike} <i class="fas fa-heart"></i>`;
+  {
+    //// Modal Carousel
+
+    /*const carouselLi = document.createElement("li");
+        carouselLi.setAttribute("id", "carousel__slide");
+        carouselLi.setAttribute("class", "carousel__slide");
+        carouselLi.setAttribute("tabindex", "-1");*/
+
+    const imageCarousel = document.createElement("img");
+    imageCarousel.setAttribute("id", "imageCarousel");
+
+    carouselListe.appendChild(imageCarousel);
+
+    let pictures = data.media
+      .filter(
+        (medium) =>
+          medium.image !== undefined &&
+          medium.photographerId === queryPhotographerId
+      )
+      .map(
+        (medium) => `/Sample_photos/${medium.photographerId}/${medium.image}`
+      );
+    /// [`/Sample_photos/${medias.photographerId}/${medias.image}`];
+
+    imageCarousel.src = pictures[0];
+    let position = 0;
+
+    const moveRight = () => {
+      if (position >= pictures.length - 1) {
+        position = 0;
+        imageCarousel.src = pictures[position];
+        return;
+      }
+      imageCarousel.src = pictures[position + 1];
+      position++;
+    };
+
+    const moveLeft = () => {
+      if (position < 1) {
+        position = pictures.length - 1;
+        imageCarousel.src = pictures[position];
+        return;
+      }
+      imageCarousel.src = pictures[position - 1];
+      position--;
+    };
+
+    leftBtn.addEventListener("click", moveRight);
+
+    rightBtn.addEventListener("click", moveLeft);
+  }
 
   const mediaGallery = document.querySelectorAll(".image-photographerBox");
 
@@ -256,6 +285,13 @@ async function photographerPageWork() {
     bodystyle.style.position = "fixed";
   }
   mediaGallery.forEach((img) => img.addEventListener("click", launchCarousel));
+
+  function closeModalCarousel() {
+    carouselSection.style.display = "none";
+    bodystyle.style.position = "relative";
+  }
+
+  closeCarousel.addEventListener("click", closeModalCarousel);
 }
 
 function createMediaPresentationElement(className, medias) {

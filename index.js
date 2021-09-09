@@ -24,6 +24,65 @@ async function photographerPageIndex() {
   let tagother = 0;
 
   data.photographers.forEach((photographer) => {
+    let activeTagsArray = [];
+
+    // Toggling the 'active-tag' and filtering relevant photographers
+    function filterPhotographers(element) {
+      element.addEventListener("click", () => {
+        const allSimilarTags = document.querySelectorAll(
+          `.tag[data-tag-name="${element.dataset.tagName}"]`
+        );
+        console.log(tagName);
+
+        element.blur();
+
+        // If a tag is active, all of its siblings (i.e duplicates) become active as well
+        if (element.classList.contains("active-tag")) {
+          allSimilarTags.forEach((similarTag) => {
+            similarTag.classList.remove("active-tag");
+          });
+          activeTagsArray = activeTagsArray.filter(
+            (tag) => !(tag === element.dataset.tagName)
+          );
+        } else {
+          allSimilarTags.forEach((similarTag) => {
+            similarTag.classList.add("active-tag");
+          });
+          activeTagsArray.push(element.dataset.tagName);
+        }
+
+        // If no tag has been selected, show all photographers
+        if (activeTagsArray.length <= 0) {
+          const elementsToDisplay = document.querySelectorAll("photographers");
+          elementsToDisplay.forEach((elementToDisplay) => {
+            elementToDisplay.classList.remove("hidden");
+          });
+          return;
+        }
+
+        // Sections are hidden, only to be shown when a relevant tag has been selected
+        const sections = document.querySelectorAll("photographers");
+        sections.forEach((section) => {
+          section.classList.add("hidden");
+        });
+
+        // If a tag has a sister tag in the active array, his section parent is displayed
+        activeTagsArray.forEach((tag) => {
+          const elementsToDisplay = document.querySelectorAll(
+            `photographers[data-tags*="${tag}"]`
+          );
+          elementsToDisplay.forEach((elementToDisplay) => {
+            elementToDisplay.classList.remove("hidden");
+          });
+        });
+      });
+    }
+
+    const tagsNav = document.querySelectorAll(".tag");
+    tagsNav.forEach((tag) => {
+      filterPhotographers(tag);
+    });
+
     if (photographer.tag == queryPhotographerId) {
     }
     const photographersContainer = document.getElementById("photographers");
@@ -115,12 +174,23 @@ async function photographerPageIndex() {
     navBarA.setAttribute("href", "#");
     navBarA.setAttribute("id", "header-navbar-link");
 
-    let navBarSpan = document.createElement("span");
-    navBarSpan.append("#" + tag);
+    const navBarSpan = document.createElement("span");
+    navBarSpan.setAttribute("class", "span-hidden");
+
+    let navBarSpanTag = document.createElement("span");
+    navBarSpanTag.setAttribute("class", "tag");
+    navBarSpanTag.setAttribute("data-tag-name", tag);
+    console.log(navBarSpanTag);
+    navBarSpanTag.append("#" + tag);
     navBarA.appendChild(navBarSpan);
+    navBarA.appendChild(navBarSpanTag);
     navBarDiv.appendChild(navBarA);
     navBarContainer.appendChild(navBarDiv);
   });
 }
 
 photographerPageIndex();
+
+////////////////////
+
+// .catch((err) => err);
